@@ -1,9 +1,13 @@
 import { View, Text, Image, TouchableOpacity } from 'react-native'
-import React from 'react'
+import React, { useEffect } from 'react'
 import { SafeAreaView } from 'react-native-safe-area-context'
 import { themeColors } from '../theme'
 
 export default function WelcomeScreen({ navigation }) {
+
+
+
+
   return (
     <SafeAreaView className='flex-1' style={{ backgroundColor: themeColors.bg }}>
       <View className='flex-1 flex justify-around my-3'>
