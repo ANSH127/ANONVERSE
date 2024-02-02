@@ -5,9 +5,7 @@ import { colors } from '../theme'
 import { PlusCircleIcon } from 'react-native-heroicons/solid'
 
 export default function HomeScreen({navigation}) {
-  const handleLogout=()=>{
-    auth.signOut()
-  }
+  
   return (
     <ScreenWrapper className='flex-1'>
 

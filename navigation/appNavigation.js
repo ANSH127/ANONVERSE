@@ -7,8 +7,8 @@ import LoginScreen from '../screens/LoginScreen';
 import SignUpScreen from '../screens/SignUpScreen';
 import WelcomeScreen from '../screens/WelcomeScreen';
 import ProfileScreen from '../screens/ProfileScreen';
-// import { onAuthStateChanged} from 'firebase/auth';
-// import { auth } from '../config/firebase';
+import { onAuthStateChanged} from 'firebase/auth';
+import { auth } from '../config/firebase';
 
 const Stack = createNativeStackNavigator();
 
@@ -17,13 +17,13 @@ export default function AppNavigation() {
   const [user,setUser] = React.useState(null)
 
 
-  // onAuthStateChanged(auth, (user) => {
-  //   if (user?.emailVerified) {
-  //     setUser(user)
-  //   } else {
-  //     setUser(null)
-  //   }
-  // });
+  onAuthStateChanged(auth, (user) => {
+    if (user?.emailVerified) {
+      setUser(user)
+    } else {
+      setUser(null)
+    }
+  });
 
 
   if (user) {

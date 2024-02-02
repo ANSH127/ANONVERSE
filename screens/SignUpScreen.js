@@ -5,9 +5,12 @@ import { SafeAreaView } from 'react-native-safe-area-context'
 import { TouchableOpacity } from 'react-native'
 import { ArrowLeftIcon } from 'react-native-heroicons/solid';
 import { TextInput } from 'react-native'
-// import { createUserWithEmailAndPassword, sendEmailVerification } from 'firebase/auth'
-// import { auth } from '../config/firebase'
+import { createUserWithEmailAndPassword, sendEmailVerification } from 'firebase/auth'
+import { auth, usersRef } from '../config/firebase'
 import Loadar from '../components/Loadar'
+import { addDoc } from 'firebase/firestore'
+
+
 
 export default function SignUpScreen({ navigation }) {
   const [name, setName] = React.useState('')
@@ -19,21 +22,29 @@ export default function SignUpScreen({ navigation }) {
       Alert.alert('Please fill all the fields')
       return
     }
-    else{
+    else {
       setLoading(true);
       try {
-        // const userCredential = await createUserWithEmailAndPassword(auth, email, password)
-        // const user = userCredential.user
-        // await sendEmailVerification(user)
+        const userCredential = await createUserWithEmailAndPassword(auth, email, password)
+        const user = userCredential.user
+        await sendEmailVerification(user)
+
+        let doc= await addDoc(usersRef, {
+          name: name,
+          email: email,
+          uid: user.uid,
+          createdAt: new Date().toISOString()
+        })
+
         Alert.alert('Verification email has been sent to your email address')
         navigation.navigate('Login')
-        
+
 
       } catch (error) {
         Alert.alert(error.message)
-        
+
       }
-      finally{
+      finally {
         setLoading(false)
       }
     }
