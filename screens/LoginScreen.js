@@ -6,8 +6,8 @@ import { TouchableOpacity } from 'react-native'
 import { ArrowLeftIcon } from 'react-native-heroicons/solid';
 import { TextInput } from 'react-native'
 import Loadar from '../components/Loadar'
-import { auth } from '../config/firebase'
-import { signInWithEmailAndPassword } from 'firebase/auth'
+// import { auth } from '../config/firebase'
+// import { signInWithEmailAndPassword } from 'firebase/auth'
 
 export default function LoginScreen({ navigation }) {
   
@@ -22,15 +22,15 @@ export default function LoginScreen({ navigation }) {
     else{
       setLoading(true)
       try {
-        const userCredential = await signInWithEmailAndPassword(auth, email, password)
-        const user = userCredential.user
-        if(user.emailVerified){
+        // const userCredential = await signInWithEmailAndPassword(auth, email, password)
+        // const user = userCredential.user
+        // if(user.emailVerified){
 
-          navigation.navigate('Home')
-        }
-        else{
-          Alert.alert('Please verify your email address')
-        }
+        //   navigation.navigate('Home')
+        // }
+        // else{
+        //   Alert.alert('Please verify your email address')
+        // }
         
       } catch (error) {
         Alert.alert(error.message)
