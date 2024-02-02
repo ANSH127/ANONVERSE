@@ -37,7 +37,7 @@ export default function ProfileScreen() {
                 <Image className='rounded-full' source={require('../assets/images/Avatar.jpg')} style={{ width: 200, height: 200 }} />
                 {/* // welcome user */}
                 <Text className='text-3xl text-black font-semibold pt-2'>
-                    Welcome {userData.name}
+                     {userData.name}
                 </Text>
                 {/* // show user email */}
                 <View className='w-full justify-center p-4'>
