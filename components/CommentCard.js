@@ -3,7 +3,9 @@ import React from 'react'
 import { formatDistance } from 'date-fns'
 import { PaperAirplaneIcon } from 'react-native-heroicons/solid'
 
+
 export default function CommentCard({ item}) {
+
     return (
         <View>
 

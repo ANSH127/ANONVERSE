@@ -26,6 +26,7 @@ export default function HomeScreen({ navigation }) {
 
       });
       // console.log(data);
+
       setConfessions(data)
 
     } catch (error) {
