@@ -27,6 +27,7 @@ export default function Card({ item }) {
                 Alert.alert("Liked")
             }
             else if(val === 0 && item.likedby.includes(auth.currentUser.uid)) {
+                setLike(1);
                 const user = auth.currentUser;
                 await updateDoc(doc(confessionRef, item.id), {
                     likes: Math.max(item.likes - 1, 0),
@@ -76,6 +77,7 @@ export default function Card({ item }) {
                     >
                         {
                             item.likedby.includes(auth.currentUser.uid) || like ?
+                            
                              <HeartIcon2 size={30} color='#3B82F6'  onPress={() => handleLike(0)} 
                              
                               />
@@ -95,7 +97,9 @@ export default function Card({ item }) {
                 </View>
 
                 <View className='flex-row gap-1'>
-                    <TouchableOpacity>
+                    <TouchableOpacity onPress={()=>
+                    navigation.navigate('Comments',{item})
+                    } >
                         <ChatBubbleBottomCenterIcon size={30} color='#3B82F6' />
                         {/* // comment count */}
 

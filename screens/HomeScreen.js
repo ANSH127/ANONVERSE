@@ -37,10 +37,10 @@ export default function HomeScreen({ navigation }) {
     }
   }
   useEffect(() => {
-    if (isFocused) {
+    // if (isFocused) {
       fetchConfession()
-    }
-  }, [isFocused])
+    // }
+  }, [])
 
   return (
     <ScreenWrapper className='flex-1'>

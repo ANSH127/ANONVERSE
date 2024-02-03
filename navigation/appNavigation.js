@@ -8,8 +8,10 @@ import SignUpScreen from '../screens/SignUpScreen';
 import WelcomeScreen from '../screens/WelcomeScreen';
 import ProfileScreen from '../screens/ProfileScreen';
 import AddConfessionScreen from '../screens/AddConfessionScreen';
+import CommentScreen from '../screens/CommentScreen';
 import { onAuthStateChanged} from 'firebase/auth';
 import { auth } from '../config/firebase';
+
 
 const Stack = createNativeStackNavigator();
 
@@ -43,6 +45,13 @@ export default function AppNavigation() {
           options={{
             presentation:'modal',
             headerShown:true,
+          }}
+
+           />
+          <Stack.Screen name="Comments" component={CommentScreen}
+          options={{
+            headerShown:true,
+            presentation:'modal',
           }}
            />
         </Stack.Navigator>
