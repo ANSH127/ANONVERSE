@@ -2,7 +2,7 @@ import { View, Text, TouchableOpacity, Image, FlatList, Alert,RefreshControl } f
 import React, { useEffect } from 'react';
 import ScreenWrapper from '../components/ScreenWrapper';
 import { colors } from '../theme';
-import { PlusCircleIcon } from 'react-native-heroicons/solid';
+import { PlusCircleIcon,ArchiveBoxIcon } from 'react-native-heroicons/solid';
 import Card from '../components/Card';
 import { confessionRef } from '../config/firebase';
 import { getDocs, query,orderBy } from 'firebase/firestore'
@@ -26,11 +26,10 @@ export default function HomeScreen({ navigation }) {
 
       });
       // console.log(data);
-
       setConfessions(data)
 
     } catch (error) {
-
+      
       Alert.alert(error.message)
     }
     finally {
@@ -49,6 +48,10 @@ export default function HomeScreen({ navigation }) {
       <View className="flex-row justify-between items-center p-4">
         <Text className={`${colors.heading} font-bold text-2xl shadow-sm`} >AnonVerse</Text>
         <View className='flex-row gap-1'>
+
+          <TouchableOpacity className='pt-1' onPress={()=>navigation.navigate('MyConfession')}>
+            <ArchiveBoxIcon size={45} color='#3B82F6' />
+          </TouchableOpacity>
 
           <TouchableOpacity onPress={() => navigation.navigate('AddConfession')}>
             <PlusCircleIcon size={50} color='#3B82F6' />
