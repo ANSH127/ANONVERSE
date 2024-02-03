@@ -1,4 +1,4 @@
-import { View, Text, TouchableOpacity, Image, FlatList, Alert } from 'react-native';
+import { View, Text, TouchableOpacity, Image, FlatList, Alert,RefreshControl } from 'react-native';
 import React, { useEffect } from 'react';
 import ScreenWrapper from '../components/ScreenWrapper';
 import { colors } from '../theme';
@@ -83,6 +83,12 @@ export default function HomeScreen({ navigation }) {
 
           )}
           keyExtractor={item => item.id}
+          refreshControl={
+            <RefreshControl
+              refreshing={loading}
+              onRefresh={fetchConfession}
+            />
+          }
 
           showsVerticalScrollIndicator={false}
           contentContainerStyle={{ paddingBottom: 200 }}
