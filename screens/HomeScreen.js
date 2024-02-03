@@ -5,7 +5,7 @@ import { colors } from '../theme';
 import { PlusCircleIcon } from 'react-native-heroicons/solid';
 import Card from '../components/Card';
 import { confessionRef } from '../config/firebase';
-import { getDocs } from 'firebase/firestore'
+import { getDocs, query,orderBy } from 'firebase/firestore'
 import { useIsFocused } from '@react-navigation/native';
 
 
@@ -18,11 +18,14 @@ export default function HomeScreen({ navigation }) {
     try {
       setLoading(true)
       let data = []
-      const querySnapshot = await getDocs(confessionRef);
+
+      const q= query(confessionRef,orderBy('createdAt','desc'))
+      const querySnapshot = await getDocs(q);
       querySnapshot.forEach((doc) => {
         data.push({ ...doc.data(), id: doc.id })
 
       });
+      // console.log(data);
       setConfessions(data)
 
     } catch (error) {
@@ -73,8 +76,9 @@ export default function HomeScreen({ navigation }) {
           data={confessions}
 
           renderItem={({ item }) => (
+            
             <>
-              <Card name={item.name} confession={item.description} mylike={item.likes} comment={item.comment} />
+              <Card item={item} />
             </>
 
           )}

@@ -1,12 +1,13 @@
 import { View, Text, TouchableOpacity, Image } from 'react-native'
 
 import React from 'react'
-import { ChatBubbleBottomCenterIcon,HeartIcon } from 'react-native-heroicons/outline'
+import { ChatBubbleBottomCenterIcon, HeartIcon } from 'react-native-heroicons/outline'
 import { HeartIcon as HeartIcon2 } from 'react-native-heroicons/solid'
+import { formatDistance } from 'date-fns'
 
 
-export default function Card({name,confession,time,mylike,comment}) {
-  const [like, setLike] = React.useState(0);
+export default function Card({ item }) {
+    const [like, setLike] = React.useState(0);
 
     return (
         <View className=' p-4
@@ -14,18 +15,18 @@ export default function Card({name,confession,time,mylike,comment}) {
         '>
             <View className='flex-row gap-2 '>
                 <Image className='rounded-full' source={require('../assets/images/Avatar.jpg')} style={{ width: 40, height: 40 }} />
-                <Text className='text-lg font-semibold'>{name}</Text>
+                <Text className='text-lg font-semibold'>{item.name}</Text>
 
             </View>
             <View className='p-2 rounded-2xl bg-gray-100 mt-2'>
                 <Text className='text-gray-500'>
                     {/* //confession */}
 
-                    {confession}
+                    {item.description}
                 </Text>
                 <Text className='text-gray-500 text-right mt-2'>
                     {/* //time of confession */}
-                    {time}
+                    {formatDistance(new Date(item.createdAt), new Date(), { addSuffix: true })}
                 </Text>
 
             </View>
@@ -42,7 +43,7 @@ export default function Card({name,confession,time,mylike,comment}) {
 
                     </TouchableOpacity>
                     <Text className='text-gray-500 font-semibold p-1'>
-                        {mylike + like}
+                        {item.likes + like}
                     </Text>
                 </View>
 
