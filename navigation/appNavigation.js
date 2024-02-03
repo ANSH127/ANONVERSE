@@ -7,6 +7,7 @@ import LoginScreen from '../screens/LoginScreen';
 import SignUpScreen from '../screens/SignUpScreen';
 import WelcomeScreen from '../screens/WelcomeScreen';
 import ProfileScreen from '../screens/ProfileScreen';
+import AddConfessionScreen from '../screens/AddConfessionScreen';
 import { onAuthStateChanged} from 'firebase/auth';
 import { auth } from '../config/firebase';
 
@@ -38,6 +39,12 @@ export default function AppNavigation() {
           <Stack.Screen name="Profile" component={ProfileScreen} options={{
             headerShown:true,
           }} />
+          <Stack.Screen name="AddConfession" component={AddConfessionScreen}
+          options={{
+            presentation:'modal',
+            headerShown:true,
+          }}
+           />
         </Stack.Navigator>
       </NavigationContainer>
     )
