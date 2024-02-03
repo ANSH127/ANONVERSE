@@ -10,10 +10,13 @@ import { useNavigation } from '@react-navigation/native'
 
 export default function Card({ item }) {
     const [like, setLike] = React.useState(0);
+    const [loading, setLoading] = React.useState(false)
+
     const navigation = useNavigation()
     const handleLike = async (val) => {
 
         try {
+            setLoading(true);
             if (val === 1 && !item.likedby.includes(auth.currentUser.uid)) {
                 const user = auth.currentUser;
                 await updateDoc(doc(confessionRef, item.id), {
@@ -24,9 +27,9 @@ export default function Card({ item }) {
                 item.likedby.push(user.uid)
                 item.likes = item.likes + 1
                 setLike(1)
-                Alert.alert("Liked")
+                // Alert.alert("Liked")
             }
-            else if(val === 0 && item.likedby.includes(auth.currentUser.uid)) {
+            else if (val === 0 && item.likedby.includes(auth.currentUser.uid)) {
                 setLike(1);
                 const user = auth.currentUser;
                 await updateDoc(doc(confessionRef, item.id), {
@@ -38,12 +41,15 @@ export default function Card({ item }) {
                 item.likedby = item.likedby.filter((id) => id !== auth.currentUser.uid)
                 item.likes = Math.max(item.likes - 1, 0)
                 setLike(0)
-                Alert.alert("Unliked")
+                // Alert.alert("Unliked")
             }
 
         } catch (error) {
             Alert.alert(error.message)
 
+        }
+        finally {
+            setLoading(false)
         }
 
     }
@@ -72,33 +78,26 @@ export default function Card({ item }) {
             {/* // like and comment button */}
             <View className='flex-row justify-around mt-2'>
                 <View className='flex-row gap-1'>
-                    <TouchableOpacity
-
-                    >
+                    {
+                        loading ?
+                            <Image source={require('../assets/images/loading2.gif')} style={{ width: 30, height: 30 }} />
+                         :
+                        <TouchableOpacity>
                         {
                             item.likedby.includes(auth.currentUser.uid) || like ?
-                            
-                             <HeartIcon2 size={30} color='#3B82F6'  onPress={() => handleLike(0)} 
-                             
-                              />
-                             : 
-                             <HeartIcon size={30} color='#3B82F6' 
-                             
-                              onPress={() => handleLike(1)} />}
-
-
-
-                        {/* // like count */}
-
-                    </TouchableOpacity>
+                            <HeartIcon2 size={30} color='#3B82F6' onPress={() => handleLike(0)}/>
+                                :
+                            <HeartIcon size={30} color='#3B82F6' onPress={() => handleLike(1)} />
+                        }
+                        </TouchableOpacity>}
                     <Text className='text-gray-500 font-semibold p-1'>
                         {Math.max(item.likes, 0)}
                     </Text>
                 </View>
 
                 <View className='flex-row gap-1'>
-                    <TouchableOpacity onPress={()=>
-                    navigation.navigate('Comments',{item})
+                    <TouchableOpacity onPress={() =>
+                        navigation.navigate('Comments', { item })
                     } >
                         <ChatBubbleBottomCenterIcon size={30} color='#3B82F6' />
                         {/* // comment count */}

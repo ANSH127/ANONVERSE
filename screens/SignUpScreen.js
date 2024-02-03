@@ -1,4 +1,4 @@
-import { View, Alert, Text, Image, TouchableWithoutFeedback, Keyboard } from 'react-native'
+import { View, Alert, Text, Image, TouchableWithoutFeedback, Keyboard,KeyboardAvoidingView } from 'react-native'
 import React from 'react'
 import { themeColors } from '../theme'
 import { SafeAreaView } from 'react-native-safe-area-context'
@@ -54,8 +54,11 @@ export default function SignUpScreen({ navigation }) {
 
   return (
 
+    <KeyboardAvoidingView behavior='position'   
+    keyboardVerticalOffset={1}
+    >
     <TouchableWithoutFeedback onPress={Keyboard.dismiss} >
-      <View className='flex-1' style={{ backgroundColor: themeColors.bg }}>
+      <View style={{ backgroundColor: themeColors.bg }}>
         <SafeAreaView className='flex' >
 
 
@@ -74,7 +77,7 @@ export default function SignUpScreen({ navigation }) {
           </View>
 
         </SafeAreaView>
-        <View className='flex-1 bg-white px-8 pt-8 ' style={{ borderTopLeftRadius: 50, borderTopRightRadius: 50 }}>
+        <View className=' bg-white px-8 p-8 ' style={{ borderTopLeftRadius: 50, borderTopRightRadius: 50 }}>
           <View className='form space-y-2'>
             <Text className='text-gray-700 ml-4'>Full Name</Text>
             <TextInput className='p-4 bg-gray-100 mb-3 text-gray-700 rounded-2xl ' placeholder='Enter Name ' onChangeText={
@@ -106,5 +109,6 @@ export default function SignUpScreen({ navigation }) {
         </View>
       </View>
     </TouchableWithoutFeedback>
+    </KeyboardAvoidingView>
   )
 }

@@ -44,14 +44,7 @@ export default function AddConfessionScreen({ navigation }) {
                     uid: user.uid,
                     createdAt: new Date().toISOString(),
                     likes: 0,
-                    comments: [
-                        {
-                            comment: '',
-                            uid: '',
-                            name: '',
-                            createdAt: ''
-                        }
-                    ], 
+                    comments: [], 
 
                     likedby: [],
 
