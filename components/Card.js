@@ -11,7 +11,6 @@ import { useNavigation } from '@react-navigation/native'
 export default function Card({ item }) {
     const [like, setLike] = React.useState(0);
     const navigation = useNavigation()
-
     const handleLike = async (val) => {
 
         try {
@@ -99,8 +98,11 @@ export default function Card({ item }) {
                     <TouchableOpacity>
                         <ChatBubbleBottomCenterIcon size={30} color='#3B82F6' />
                         {/* // comment count */}
+
                     </TouchableOpacity>
-                    <Text className='text-gray-500 p-1 font-semibold'> 10</Text>
+                    <Text className='text-gray-500 p-1 font-semibold'>
+                        {item.comments.length}
+                    </Text>
                 </View>
             </View>
             {/* // time of confession */}
