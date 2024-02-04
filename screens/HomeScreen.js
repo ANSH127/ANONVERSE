@@ -82,7 +82,10 @@ export default function HomeScreen({ navigation }) {
           renderItem={({ item }) => (
             
             <>
+            {item.reportedBy.length<5 &&
+
               <Card item={item} />
+            }
             </>
 
           )}

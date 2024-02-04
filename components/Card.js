@@ -1,8 +1,8 @@
 import { View, Text, TouchableOpacity, Image, Alert } from 'react-native'
 
 import React, { useEffect } from 'react'
-import { ChatBubbleBottomCenterIcon, HeartIcon } from 'react-native-heroicons/outline'
-import { HeartIcon as HeartIcon2 } from 'react-native-heroicons/solid'
+import { ChatBubbleBottomCenterIcon, HeartIcon, FlagIcon } from 'react-native-heroicons/outline'
+import { HeartIcon as HeartIcon2, FlagIcon as FlagIcon2 } from 'react-native-heroicons/solid'
 import { formatDistance } from 'date-fns'
 import { confessionRef, auth } from '../config/firebase'
 import { updateDoc, doc } from 'firebase/firestore'
@@ -54,15 +54,71 @@ export default function Card({ item }) {
 
     }
 
+
+    const handleReport = () => {
+        try {
+            if (item.reportedBy.includes(auth.currentUser.uid)) {
+                Alert.alert('Already Reported', 'You have already reported this post. Our team will review the post and take necessary action if required.')
+                return;
+            }
+
+            updateDoc(doc(confessionRef, item.id), {
+                reportedBy: [...item.reportedBy, auth.currentUser.uid]
+            })
+            item.reportedBy.push(auth.currentUser.uid)
+
+
+            Alert.alert('Reported', 'Thank you for reporting the post. Our team will review the post and take necessary action if required.');
+
+        } catch (error) {
+
+            Alert.alert(error.message)
+
+        }
+
+
+
+        Alert.alert('Reported', 'Thank you for reporting the post. Our team will review the post and take necessary action if required.')
+
+
+    }
+
     return (
         <View className=' p-4
         bg-white shadow-md rounded-2xl m-4
         '>
-            <View className='flex-row gap-2 '>
-                <Image className='rounded-full' source={require('../assets/images/Avatar.jpg')} style={{ width: 40, height: 40 }} />
-                <Text className='text-lg font-semibold'>{item.name}</Text>
+            <View className='flex-row justify-between'>
+                <View className='flex-row  gap-2'>
+
+                    <Image className='rounded-full' source={require('../assets/images/Avatar.jpg')} style={{ width: 40, height: 40 }} />
+                    <Text className='text-lg font-semibold'>{item.name}</Text>
+                </View>
+
+                {/* // report button */}
+                <View className='flex-row pt-1 '>
+                    <TouchableOpacity onPress={handleReport} >
+                        {
+                            item.reportedBy.includes(auth.currentUser.uid) ?
+                                <FlagIcon2 size={25} color='#e61014' />
+                                :
+                                <FlagIcon size={25} color='#e61014' />
+                        }
+                    </TouchableOpacity>
+                </View>
+
 
             </View>
+
+
+            {item.reportedBy.length >=5  &&
+                <View className='p-1'>
+                    <Text className='text-red-500 font-semibold'>
+                        Your Confession Reported and Under Review by Admin (Not visible to others)
+                    </Text>
+                </View>
+
+            }
+
             <View className='p-2 rounded-2xl bg-gray-100 mt-2'>
                 <Text className='text-gray-500'>
                     {/* //confession */}
@@ -81,15 +137,15 @@ export default function Card({ item }) {
                     {
                         loading ?
                             <Image source={require('../assets/images/loading2.gif')} style={{ width: 30, height: 30 }} />
-                         :
-                        <TouchableOpacity>
-                        {
-                            item.likedby.includes(auth.currentUser.uid) || like ?
-                            <HeartIcon2 size={30} color='#3B82F6' onPress={() => handleLike(0)}/>
-                                :
-                            <HeartIcon size={30} color='#3B82F6' onPress={() => handleLike(1)} />
-                        }
-                        </TouchableOpacity>}
+                            :
+                            <TouchableOpacity>
+                                {
+                                    item.likedby.includes(auth.currentUser.uid) || like ?
+                                        <HeartIcon2 size={30} color='#3B82F6' onPress={() => handleLike(0)} />
+                                        :
+                                        <HeartIcon size={30} color='#3B82F6' onPress={() => handleLike(1)} />
+                                }
+                            </TouchableOpacity>}
                     <Text className='text-gray-500 font-semibold p-1'>
                         {Math.max(item.likes, 0)}
                     </Text>

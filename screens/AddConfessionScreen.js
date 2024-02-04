@@ -47,6 +47,7 @@ export default function AddConfessionScreen({ navigation }) {
                     comments: [], 
 
                     likedby: [],
+                    reportedBy: []
 
 
                 })
