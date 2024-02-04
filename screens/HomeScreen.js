@@ -4,8 +4,8 @@ import ScreenWrapper from '../components/ScreenWrapper';
 import { colors } from '../theme';
 import { PlusCircleIcon,ArchiveBoxIcon } from 'react-native-heroicons/solid';
 import Card from '../components/Card';
-import { confessionRef } from '../config/firebase';
-import { getDocs, query,orderBy } from 'firebase/firestore'
+import { confessionRef,auth } from '../config/firebase';
+import { getDocs, query,orderBy,where } from 'firebase/firestore'
 import { useIsFocused } from '@react-navigation/native';
 
 
@@ -19,7 +19,7 @@ export default function HomeScreen({ navigation }) {
       setLoading(true)
       let data = []
 
-      const q= query(confessionRef,orderBy('createdAt','desc'))
+      const q= query(confessionRef,orderBy('uid'),where('uid','!=',auth.currentUser.uid),orderBy('createdAt','desc'))
       const querySnapshot = await getDocs(q);
       querySnapshot.forEach((doc) => {
         data.push({ ...doc.data(), id: doc.id })
@@ -29,7 +29,7 @@ export default function HomeScreen({ navigation }) {
       setConfessions(data)
 
     } catch (error) {
-      
+      console.log(error.message);
       Alert.alert(error.message)
     }
     finally {
