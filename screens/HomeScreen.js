@@ -1,11 +1,11 @@
-import { View, Text, TouchableOpacity, Image, FlatList, Alert,RefreshControl } from 'react-native';
+import { View, Text, TouchableOpacity, Image, FlatList, Alert, RefreshControl } from 'react-native';
 import React, { useEffect } from 'react';
 import ScreenWrapper from '../components/ScreenWrapper';
 import { colors } from '../theme';
-import { PlusCircleIcon,ArchiveBoxIcon } from 'react-native-heroicons/solid';
+import { PlusCircleIcon, ArchiveBoxIcon } from 'react-native-heroicons/solid';
 import Card from '../components/Card';
-import { confessionRef,auth } from '../config/firebase';
-import { getDocs, query,orderBy,where } from 'firebase/firestore'
+import { confessionRef, auth } from '../config/firebase';
+import { getDocs, query, orderBy, where } from 'firebase/firestore'
 import { useIsFocused } from '@react-navigation/native';
 
 
@@ -19,7 +19,7 @@ export default function HomeScreen({ navigation }) {
       setLoading(true)
       let data = []
 
-      const q= query(confessionRef,orderBy('uid'),where('uid','!=',auth.currentUser.uid),orderBy('createdAt','desc'))
+      const q = query(confessionRef, orderBy('uid'), where('uid', '!=', auth.currentUser.uid), orderBy('createdAt', 'desc'))
       const querySnapshot = await getDocs(q);
       querySnapshot.forEach((doc) => {
         data.push({ ...doc.data(), id: doc.id })
@@ -38,7 +38,7 @@ export default function HomeScreen({ navigation }) {
   }
   useEffect(() => {
     // if (isFocused) {
-      fetchConfession()
+    fetchConfession()
     // }
   }, [])
 
@@ -49,7 +49,7 @@ export default function HomeScreen({ navigation }) {
         <Text className={`${colors.heading} font-bold text-2xl shadow-sm`} >AnonVerse</Text>
         <View className='flex-row gap-1'>
 
-          <TouchableOpacity className='pt-1' onPress={()=>navigation.navigate('MyConfession')}>
+          <TouchableOpacity className='pt-1' onPress={() => navigation.navigate('MyConfession')}>
             <ArchiveBoxIcon size={45} color='#3B82F6' />
           </TouchableOpacity>
 
@@ -69,38 +69,43 @@ export default function HomeScreen({ navigation }) {
 
 
       {
-        loading ? 
-        <View className='flex-1 p-4 justify-center items-center'>
-          <Image source={require('../assets/images/loading.gif')} style={{ width: 150, height: 150 }} />
-          
-        </View> :
-        <View className='h-full '>
+        loading ?
+          <View className='flex-1 p-4 justify-center items-center'>
+            <Image source={require('../assets/images/loading.gif')} style={{ width: 150, height: 150 }} />
 
-        <FlatList
-          data={confessions}
+          </View> :
+          <View className='h-full '>
 
-          renderItem={({ item }) => (
-            
-            <>
-            {item.reportedBy.length<5 &&
+            {confessions.length === 0 && <View className='flex-1  items-center'>
+              <Text className='text-lg font-bold text-center'>No Confessions Yet</Text>
+            </View>}
 
-              <Card item={item} />
-            }
-            </>
 
-          )}
-          keyExtractor={item => item.id}
-          refreshControl={
-            <RefreshControl
-              refreshing={loading}
-              onRefresh={fetchConfession}
+            <FlatList
+              data={confessions}
+
+              renderItem={({ item }) => (
+
+                <>
+                  {item.reportedBy.length < 5 &&
+
+                    <Card item={item} />
+                  }
+                </>
+
+              )}
+              keyExtractor={item => item.id}
+              refreshControl={
+                <RefreshControl
+                  refreshing={loading}
+                  onRefresh={fetchConfession}
+                />
+              }
+
+              showsVerticalScrollIndicator={false}
+              contentContainerStyle={{ paddingBottom: 200 }}
             />
-          }
-
-          showsVerticalScrollIndicator={false}
-          contentContainerStyle={{ paddingBottom: 200 }}
-        />
-      </View>}
+          </View>}
 
 
     </ScreenWrapper>
