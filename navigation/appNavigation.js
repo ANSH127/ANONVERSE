@@ -44,8 +44,8 @@ export default function AppNavigation() {
           }} />
           <Stack.Screen name="AddConfession" component={AddConfessionScreen}
           options={{
-            presentation:'modal',
             headerShown:true,
+            presentation:'modal',
           }}
 
            />

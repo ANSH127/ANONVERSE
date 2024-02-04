@@ -88,7 +88,7 @@ export default function CommentScreen(props) {
                 {/* add a comment input here at the bottom */}
                 <View className="absolute bottom-1 left-0 right-0">
                     <View className="flex-row justify-between items-center p-4">
-                        <TextInput className="flex-1 border-2 border-gray-500 rounded-lg p-4" placeholder="Add a comment" multiline={true} numberOfLines={4} onChangeText={
+                        <TextInput className="flex-1 border-2 border-gray-500 rounded-lg " placeholder="Add a comment" multiline={true} numberOfLines={4} onChangeText={
                             (text) => setMessage(text)
                         } defaultValue={message} />
 

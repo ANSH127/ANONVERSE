@@ -1,4 +1,4 @@
-import { View, Text, TextInput, TouchableOpacity, Image, TouchableWithoutFeedback, Keyboard, Alert } from 'react-native'
+import { View, Text, TextInput, TouchableOpacity, Image, TouchableWithoutFeedback, Keyboard, Alert,KeyboardAvoidingView } from 'react-native'
 import React from 'react'
 import SelectDropdown from 'react-native-select-dropdown'
 
@@ -44,7 +44,7 @@ export default function AddConfessionScreen({ navigation }) {
                     uid: user.uid,
                     createdAt: new Date().toISOString(),
                     likes: 0,
-                    comments: [], 
+                    comments: [],
 
                     likedby: [],
                     reportedBy: []
@@ -69,56 +69,60 @@ export default function AddConfessionScreen({ navigation }) {
         }
     }
     return (
-        <TouchableWithoutFeedback onPress={Keyboard.dismiss} >
-            <View className='bg-white h-full p-4'>
-                <View className='flex-row justify-center mb-5'>
-                    <Image source={require('../assets/images/confession.jpg')} style={{
-                        width: "100%", height: 200
-                        , resizeMode: 'contain'
-                    }} />
-                </View>
-                <View className='p-4'>
-                    {/* // select user */}
-                    <View
-                        className=' mb-5'>
-                        <SelectDropdown data={name} buttonStyle={{ backgroundColor: '#dbeafe', width: 'auto', borderRadius: '10px' }} buttonTextStyle={{ color: '#000000' }} defaultButtonText='Select Name to display'
-                            onSelect={(selectedItem, index) => {
-                                setDisplayName(selectedItem)
-                            }}
-                            buttonTextAfterSelection={(selectedItem, index) => {
-                                return selectedItem
-                            }}
-                            rowTextForSelection={(item, index) => {
-                                return item
-                            }}
+        <KeyboardAvoidingView behavior='position'
+            keyboardVerticalOffset={100}
+        >
+            <TouchableWithoutFeedback onPress={Keyboard.dismiss} >
+                <View className='bg-white h-full p-4'>
+                    <View className='flex-1 justify-center mb-2'>
+                        <Image source={require('../assets/images/confession.jpg')} style={{
+                            width: "100%", height: 200
+                            , resizeMode: 'contain'
+                        }} />
+                    </View>
+                    <View className='p-4 '>
+                        {/* // select user */}
+                        <View
+                            className=' mb-5'>
+                            <SelectDropdown data={name} buttonStyle={{ backgroundColor: '#dbeafe', width: 'auto' }} buttonTextStyle={{ color: '#000000' }} defaultButtonText='Select Name to display'
+                                onSelect={(selectedItem, index) => {
+                                    setDisplayName(selectedItem)
+                                }}
+                                buttonTextAfterSelection={(selectedItem, index) => {
+                                    return selectedItem
+                                }}
+                                rowTextForSelection={(item, index) => {
+                                    return item
+                                }}
 
 
+                            />
+                        </View>
+
+
+                        <TextInput className='px-4  mb-3 bg-blue-100 text-gray-700 rounded-2xl w-full' placeholder='Confession'
+                            scrollEnabled={true}
+                            multiline={true}
+                            numberOfLines={7}
+                            onChangeText={
+                                (text) => setConfession(text)
+                            }
                         />
+                        {/* // submit button */}
+
+                        {
+                            loading ? <Loadar /> :
+                                <TouchableOpacity className='bg-blue-200 p-3 rounded-2xl'
+                                    onPress={() => {
+                                        handleSubmit()
+                                    }}
+                                >
+                                    <Text className='text-center text-xl text-gray-700 font-bold'>Submit</Text>
+                                </TouchableOpacity>}
                     </View>
 
-
-                    <TextInput className='p-5 mb-3 bg-blue-100 text-gray-700 rounded-2xl w-full' placeholder='Confession'
-                        scrollEnabled={true}
-                        multiline={true}
-                        numberOfLines={10}
-                        onChangeText={
-                            (text) => setConfession(text)
-                        }
-                    />
-                    {/* // submit button */}
-                    
-                    {
-                        loading? <Loadar />:
-                        <TouchableOpacity className='bg-blue-200 p-3 rounded-2xl'
-                        onPress={() => {
-                            handleSubmit()
-                        }}
-                    >
-                        <Text className='text-center text-xl text-gray-700 font-bold'>Submit</Text>
-                    </TouchableOpacity>}
                 </View>
-
-            </View>
-        </TouchableWithoutFeedback>
+            </TouchableWithoutFeedback>
+        </KeyboardAvoidingView>
     )
 }

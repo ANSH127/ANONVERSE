@@ -46,6 +46,9 @@ export default function UserConfessionScreen() {
             <Image source={require('../assets/images/loading.gif')} style={{ width: 150, height: 150 }} />
 
           </View> :
+          confessions.length === 0 ? <View className='p-4 justify-center items-center'>
+            <Text className='text-center text-2xl font-bold'>No Confessions</Text>
+          </View> :
           <View className='h-full '>
 
             <FlatList
