@@ -129,8 +129,7 @@ export default function Card({ item }) {
         
         
             config={config}
-            style={{
-            }}
+            
 
         >
             <View
@@ -139,7 +138,7 @@ export default function Card({ item }) {
                 // on swipe move the card to left and right
                 style={{
                     transform: [
-                        { translateX: handleSwipe ? -100 : 0 }
+                        { translateX: handleSwipe && item.uid == auth.currentUser.uid ? -100 : 0 }
                     ]
                 }}
 
