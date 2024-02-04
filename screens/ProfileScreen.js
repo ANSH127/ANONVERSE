@@ -48,7 +48,7 @@ export default function ProfileScreen() {
 
     return (
         <ScreenWrapper className='flex-1'>
-            <View className='items-center'>
+            <View className='items-center h-full'>
                 <Image className='rounded-full' source={require('../assets/images/Avatar.jpg')} style={{ width: 200, height: 200 }} />
                 {/* // welcome user */}
 
@@ -71,10 +71,6 @@ export default function ProfileScreen() {
                             </TouchableOpacity>
                         </View>
                     </>}
-
-
-
-
 
 
 
