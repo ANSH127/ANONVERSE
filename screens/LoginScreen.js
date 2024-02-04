@@ -1,4 +1,4 @@
-import { View, Text, Image, TouchableWithoutFeedback, Keyboard, Alert,KeyboardAvoidingView } from 'react-native'
+import { View, Text, Image, TouchableWithoutFeedback, Keyboard, Alert, KeyboardAvoidingView } from 'react-native'
 import React from 'react'
 import { themeColors } from '../theme'
 import { SafeAreaView } from 'react-native-safe-area-context'
@@ -8,8 +8,11 @@ import { TextInput } from 'react-native'
 import Loadar from '../components/Loadar'
 import { auth } from '../config/firebase'
 import { signInWithEmailAndPassword } from 'firebase/auth'
+import { setUser } from '../redux/slices/user';
+import { useDispatch } from 'react-redux'
 
 export default function LoginScreen({ navigation }) {
+  const dispatch = useDispatch()
 
   const [email, setEmail] = React.useState('')
   const [password, setPassword] = React.useState('')
@@ -25,8 +28,9 @@ export default function LoginScreen({ navigation }) {
         const userCredential = await signInWithEmailAndPassword(auth, email, password)
         const user = userCredential.user
         if (user.emailVerified) {
+          dispatch(setUser(user))
 
-          navigation.navigate('Home')
+          navigation.navigate('Welcome')
         }
         else {
           Alert.alert('Please verify your email address')
