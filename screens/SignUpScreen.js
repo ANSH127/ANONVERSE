@@ -33,7 +33,8 @@ export default function SignUpScreen({ navigation }) {
           name: name,
           email: email,
           uid: user.uid,
-          createdAt: new Date().toISOString()
+          createdAt: new Date().toISOString(),
+          avatar:0
         })
 
         Alert.alert('Verification email has been sent to your email address')

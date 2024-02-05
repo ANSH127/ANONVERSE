@@ -5,7 +5,25 @@ import { auth, usersRef } from '../config/firebase'
 import { getDocs, or, query, where, orderBy } from 'firebase/firestore'
 import Loadar from '../components/Loadar'
 
-export default function ProfileScreen() {
+import { useIsFocused } from '@react-navigation/native'
+import { useSelector,useDispatch } from 'react-redux'
+import { setAvtar } from '../redux/slices/user'
+
+
+const Avatar = [
+    require('../assets/images/Avatar/Avatar1.jpg'),
+    require('../assets/images/Avatar/Avatar2.jpg'),
+    require('../assets/images/Avatar/Avatar3.jpg'),
+    require('../assets/images/Avatar/Avatar4.jpg'),
+    require('../assets/images/Avatar/Avatar5.jpg'),
+    require('../assets/images/Avatar/Avatar6.jpg'),
+
+]
+
+export default function ProfileScreen({ navigation}) {
+    const dispatch = useDispatch()
+    const avatar = useSelector(state => state.user.avtar)
+    const isFocused = useIsFocused()
     const [loading, setLoading] = React.useState(false)
 
 
@@ -29,6 +47,7 @@ export default function ProfileScreen() {
 
                 });
                 setUserData(data[0])
+                dispatch(setAvtar(data[0].avatar))
             }
 
         } catch (error) {
@@ -44,12 +63,16 @@ export default function ProfileScreen() {
 
     useEffect(() => {
         fetchUserData()
-    }, [])
+    }, [isFocused])
 
     return (
         <ScreenWrapper className='flex-1'>
             <View className='items-center h-full'>
-                <Image className='rounded-full' source={require('../assets/images/Avatar.jpg')} style={{ width: 200, height: 200 }} />
+                <TouchableOpacity  onPress={() => navigation.navigate('Avatar')} >
+                <Image className='rounded-full' source={
+                    Avatar[userData.avatar]
+                } style={{ width: 200, height: 200 }} />
+                </TouchableOpacity>
                 {/* // welcome user */}
 
                 <Text className='text-3xl text-black font-semibold pt-2'>

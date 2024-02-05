@@ -10,7 +10,9 @@ import ProfileScreen from '../screens/ProfileScreen';
 import AddConfessionScreen from '../screens/AddConfessionScreen';
 import CommentScreen from '../screens/CommentScreen';
 import UserConfessionScreen from '../screens/UserConfessionScreen';
+import AvatarScreen from '../screens/AvatarScreen';
 import { onAuthStateChanged } from 'firebase/auth';
+
 import { auth } from '../config/firebase';
 import { useSelector } from 'react-redux';
 
@@ -63,6 +65,8 @@ export default function AppNavigation() {
           />
 
           <Stack.Screen name="MyConfession" component={UserConfessionScreen} options={{ headerShown: true, presentation: 'modal' }} />
+
+          <Stack.Screen name="Avatar" component={AvatarScreen} options={{ headerShown: true, presentation: 'modal' }} />
         </Stack.Navigator>
       </NavigationContainer>
     )

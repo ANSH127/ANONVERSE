@@ -7,9 +7,23 @@ import Card from '../components/Card';
 import { confessionRef, auth } from '../config/firebase';
 import { getDocs, query, orderBy, where } from 'firebase/firestore'
 import { useIsFocused } from '@react-navigation/native';
+import { useSelector } from 'react-redux';
+
+
+
+const Avatar = [
+  require('../assets/images/Avatar/Avatar1.jpg'),
+  require('../assets/images/Avatar/Avatar2.jpg'),
+  require('../assets/images/Avatar/Avatar3.jpg'),
+  require('../assets/images/Avatar/Avatar4.jpg'),
+  require('../assets/images/Avatar/Avatar5.jpg'),
+  require('../assets/images/Avatar/Avatar6.jpg'),
+
+]
 
 
 export default function HomeScreen({ navigation }) {
+  const avatar = useSelector(state => state.user.avtar)
   const isFocused = useIsFocused()
   const [confessions, setConfessions] = React.useState([])
   const [loading, setLoading] = React.useState(false)
@@ -60,7 +74,9 @@ export default function HomeScreen({ navigation }) {
 
 
           <TouchableOpacity onPress={() => navigation.navigate('Profile')}>
-            <Image className='rounded-full' source={require('../assets/images/Avatar.jpg')} style={{ width: 50, height: 50 }} />
+            <Image className='rounded-full' source={
+              avatar ? Avatar[avatar] : Avatar[0]
+            } style={{ width: 50, height: 50 }} />
           </TouchableOpacity>
         </View>
 
