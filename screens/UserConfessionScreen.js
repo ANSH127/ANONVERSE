@@ -3,9 +3,10 @@ import React, { useEffect } from 'react';
 import { confessionRef, auth } from '../config/firebase';
 import { getDocs, query, orderBy, where } from 'firebase/firestore'
 import Card from '../components/Card';
+import { useSelector } from 'react-redux';
 
 export default function UserConfessionScreen() {
-
+  const avatarlist = useSelector(state => state.user.AvtarList)
   const [confessions, setConfessions] = React.useState([])
   const [loading, setLoading] = React.useState(false)
 
@@ -49,26 +50,29 @@ export default function UserConfessionScreen() {
           confessions.length === 0 ? <View className='p-4 justify-center items-center'>
             <Text className='text-center text-2xl font-bold'>No Confessions</Text>
           </View> :
-          <View className='h-full '>
+            <View className='h-full '>
 
-            <FlatList
-              data={confessions}
+              <FlatList
+                data={confessions}
 
-              renderItem={({ item }) => (
+                renderItem={({ item }) => (
 
-                <>
-                  <Card item={item} />
-                </>
+                  <>
+                    <Card item={item}
+                    avatarIndex={avatarlist.find(avatar => avatar.uid === item.uid).avatar}
 
-              )}
-              keyExtractor={item => item.id}
+                     />
+                  </>
+
+                )}
+                keyExtractor={item => item.id}
 
 
 
-              showsVerticalScrollIndicator={false}
-              contentContainerStyle={{ paddingBottom: 200 }}
-            />
-          </View>}
+                showsVerticalScrollIndicator={false}
+                contentContainerStyle={{ paddingBottom: 200 }}
+              />
+            </View>}
     </View>
   )
 }

@@ -11,7 +11,16 @@ import GestureRecognizer, { swipeDirections } from 'react-native-swipe-gestures'
 import Loadar from './Loadar';
 
 
-export default function Card({ item }) {
+const Avatar = [
+    require('../assets/images/Avatar/Avatar1.jpg'),
+    require('../assets/images/Avatar/Avatar2.jpg'),
+    require('../assets/images/Avatar/Avatar3.jpg'),
+    require('../assets/images/Avatar/Avatar4.jpg'),
+    require('../assets/images/Avatar/Avatar5.jpg'),
+    require('../assets/images/Avatar/Avatar6.jpg'),
+
+]
+export default function Card({ item,avatarIndex }) {
     const [like, setLike] = React.useState(0);
     const [loading, setLoading] = React.useState(false)
     const [isdeleting, setIsdeleting] = React.useState(false)
@@ -146,7 +155,9 @@ export default function Card({ item }) {
                 <View className='flex-row justify-between'>
                     <View className='flex-row  gap-2'>
 
-                        <Image className='rounded-full' source={require('../assets/images/Avatar.jpg')} style={{ width: 40, height: 40 }} />
+                        <Image className='rounded-full'
+                         source={Avatar[avatarIndex?avatarIndex:0]}
+                         style={{ width: 40, height: 40 }} />
                         <Text className='text-lg font-semibold'>{item.name}</Text>
                     </View>
 

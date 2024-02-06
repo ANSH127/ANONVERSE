@@ -7,7 +7,7 @@ import Loadar from '../components/Loadar'
 
 import { useIsFocused } from '@react-navigation/native'
 import { useSelector,useDispatch } from 'react-redux'
-import { setAvtar } from '../redux/slices/user'
+import { setAvtar,setAvtarList } from '../redux/slices/user'
 
 
 const Avatar = [
@@ -33,32 +33,57 @@ export default function ProfileScreen({ navigation}) {
 
     const [userData, setUserData] = React.useState({})
 
+    // const fetchUserData = async () => {
+    //     try {
+    //         setLoading(true)
+    //         const user = auth.currentUser
+
+    //         if (user) {
+    //             let data = []
+    //             const q = query(usersRef, where('uid', '==', user.uid))
+    //             const querySnapshot = await getDocs(q)
+    //             querySnapshot.forEach((doc) => {
+    //                 data.push({ ...doc.data(), id: doc.id })
+
+    //             });
+    //             setUserData(data[0])
+    //             dispatch(setAvtar(data[0].avatar))
+    //         }
+
+    //     } catch (error) {
+    //         Alert.alert(error.message)
+
+    //     }
+    //     finally {
+    //         setLoading(false)
+    //     }
+
+
+    // }
+
     const fetchUserData = async () => {
         try {
             setLoading(true)
-            const user = auth.currentUser
+            let data = []
+            let data2 = []
 
-            if (user) {
-                let data = []
-                const q = query(usersRef, where('uid', '==', user.uid))
-                const querySnapshot = await getDocs(q)
-                querySnapshot.forEach((doc) => {
-                    data.push({ ...doc.data(), id: doc.id })
+            let querySnapshot = await getDocs(usersRef);
+            querySnapshot.forEach((doc) => {
+                if (doc.data().uid === auth.currentUser.uid) {
+                    data2.push({...doc.data(),id:doc.id})
+                }
+                data.push({ avatar: doc.data().avatar, uid: doc.data().uid ,id:doc.id})
 
-                });
-                setUserData(data[0])
-                dispatch(setAvtar(data[0].avatar))
-            }
-
+            });
+            dispatch(setAvtarList(data))
+            dispatch(setAvtar(data2[0].avatar))
+            setUserData(data2[0])
         } catch (error) {
             Alert.alert(error.message)
-
         }
         finally {
             setLoading(false)
         }
-
-
     }
 
     useEffect(() => {

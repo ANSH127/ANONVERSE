@@ -7,6 +7,7 @@ import { createSlice } from '@reduxjs/toolkit'
 const initialState = {
     user: null,
     avtar: 0,
+    AvtarList: []
 }
 
 export const userSlice = createSlice({
@@ -20,13 +21,17 @@ export const userSlice = createSlice({
         setAvtar: (state, action) => {
             state.avtar = action.payload
         },
+        setAvtarList: (state, action) => {
+            state.AvtarList = action.payload
+        }
+
 
 
 
     },
 })
 
-export const { setUser, setAvtar } = userSlice.actions
+export const { setUser, setAvtar,setAvtarList } = userSlice.actions
 
 
 export default userSlice.reducer

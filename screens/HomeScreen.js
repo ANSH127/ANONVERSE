@@ -4,10 +4,11 @@ import ScreenWrapper from '../components/ScreenWrapper';
 import { colors } from '../theme';
 import { PlusCircleIcon, ArchiveBoxIcon } from 'react-native-heroicons/solid';
 import Card from '../components/Card';
-import { confessionRef, auth } from '../config/firebase';
+import { confessionRef,usersRef, auth } from '../config/firebase';
 import { getDocs, query, orderBy, where } from 'firebase/firestore'
 import { useIsFocused } from '@react-navigation/native';
-import { useSelector } from 'react-redux';
+import { useSelector,useDispatch } from 'react-redux';
+import {setAvtarList,setAvtar } from '../redux/slices/user';
 
 
 
@@ -23,6 +24,9 @@ const Avatar = [
 
 
 export default function HomeScreen({ navigation }) {
+  const avatarlist = useSelector(state => state.user.AvtarList)
+
+  const dispatch = useDispatch()
   const avatar = useSelector(state => state.user.avtar)
   const isFocused = useIsFocused()
   const [confessions, setConfessions] = React.useState([])
@@ -42,6 +46,7 @@ export default function HomeScreen({ navigation }) {
       // console.log(data);
       setConfessions(data)
 
+
     } catch (error) {
       console.log(error.message);
       Alert.alert(error.message)
@@ -50,8 +55,34 @@ export default function HomeScreen({ navigation }) {
       setLoading(false)
     }
   }
+
+
+  const fetchAllUsersAvatar = async () => {
+    try {
+      setLoading(true)
+      let data = []
+
+      let querySnapshot = await getDocs(usersRef);
+      querySnapshot.forEach((doc) => {
+        data.push({ avatar: doc.data().avatar, uid: doc.data().uid ,id:doc.id})
+
+      });
+      dispatch(setAvtarList(data))
+
+      dispatch(setAvtar(data.find(avatar => avatar.uid === auth.currentUser.uid).avatar))
+
+    } catch (error) {
+      console.log(error.message);
+      Alert.alert(error.message)
+    }
+    finally {
+      setLoading(false)
+    }
+  }
+
   useEffect(() => {
     // if (isFocused) {
+      fetchAllUsersAvatar()
     fetchConfession()
     // }
   }, [])
@@ -105,7 +136,9 @@ export default function HomeScreen({ navigation }) {
                 <>
                   {item.reportedBy.length < 5 &&
 
-                    <Card item={item} />
+                    <Card item={item} 
+                    avatarIndex={avatarlist.find(avatar => avatar.uid === item.uid).avatar}
+                     />
                   }
                 </>
 
