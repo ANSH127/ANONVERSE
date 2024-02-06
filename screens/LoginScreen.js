@@ -78,7 +78,7 @@ export default function LoginScreen({ navigation }) {
               } />
               <Text className='text-gray-700 ml-4'>Password</Text>
               <TextInput secureTextEntry className='p-4 bg-gray-100 text-gray-700 rounded-2xl ' placeholder='Enter Password ' onChangeText={(text) => setPassword(text)} />
-              <TouchableOpacity className='flex items-end my-2'>
+              <TouchableOpacity className='flex items-end my-2' onPress={()=>navigation.navigate('Reset')} >
                 <Text className='text-right text-gray-700 mr-4'>Forgot Password?</Text>
               </TouchableOpacity>
 

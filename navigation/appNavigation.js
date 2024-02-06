@@ -11,6 +11,7 @@ import AddConfessionScreen from '../screens/AddConfessionScreen';
 import CommentScreen from '../screens/CommentScreen';
 import UserConfessionScreen from '../screens/UserConfessionScreen';
 import AvatarScreen from '../screens/AvatarScreen';
+import ResetPasswordScreen from '../screens/ResetPasswordScreen';
 import { onAuthStateChanged } from 'firebase/auth';
 
 import { auth } from '../config/firebase';
@@ -67,6 +68,7 @@ export default function AppNavigation() {
           <Stack.Screen name="MyConfession" component={UserConfessionScreen} options={{ headerShown: true, presentation: 'modal' }} />
 
           <Stack.Screen name="Avatar" component={AvatarScreen} options={{ headerShown: true, presentation: 'modal' }} />
+
         </Stack.Navigator>
       </NavigationContainer>
     )
@@ -82,6 +84,8 @@ export default function AppNavigation() {
           <Stack.Screen name="Welcome" component={WelcomeScreen} />
           <Stack.Screen name="Login" component={LoginScreen} />
           <Stack.Screen name="SignUp" component={SignUpScreen} />
+          <Stack.Screen name="Reset" component={ResetPasswordScreen}  />
+
         </Stack.Navigator>
       </NavigationContainer>
     )
